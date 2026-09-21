@@ -12,30 +12,89 @@
   --font-script: "Caveat", "Comic Sans MS", cursive;
   --font-round: "Baloo 2", "Quicksand", sans-serif;
 
-  /* 暖色粉彩板 */
-  --color-cream: #fbf5ea;
-  --color-paper: #fffdf7;
-  --color-ink: #5b4a3f;
-  --color-ink-soft: #a08b7a;
-  --color-tape: #f7e9b5;
-  --color-pblue: #c9e4f0;
-  --color-ppink: #f6cfd8;
-  --color-pyellow: #f8e3b0;
-  --color-ppurple: #dcd0f0;
-  --color-pgreen: #cfe8cd;
+  /* 暖色粉彩板（浅色） / 深色星空 · 具体取值由下方运行时 CSS 变量提供，
+     这样切换 <html data-theme="..."> 就能让所有 bg-/text-/border- 同步变化 */
+  --color-cream: var(--c-cream);
+  --color-paper: var(--c-paper);
+  --color-ink: var(--c-ink);
+  --color-ink-soft: var(--c-ink-soft);
+  --color-tape: var(--c-tape);
+  --color-pblue: var(--c-pblue);
+  --color-ppink: var(--c-ppink);
+  --color-pyellow: var(--c-pyellow);
+  --color-ppurple: var(--c-ppurple);
+  --color-pgreen: var(--c-pgreen);
+}
+
+/* ==========================================================
+   主题变量：浅色（默认）/ 深色星空
+   ========================================================== */
+:root {
+  color-scheme: light;
+  /* 暖奶油纸纹 · 浅色 */
+  --c-cream: #fbf5ea;
+  --c-paper: #fffdf7;
+  --c-ink: #5b4a3f;
+  --c-ink-soft: #a08b7a;
+  --c-tape: #f7e9b5;
+  --c-pblue: #c9e4f0;
+  --c-ppink: #f6cfd8;
+  --c-pyellow: #f8e3b0;
+  --c-ppurple: #dcd0f0;
+  --c-pgreen: #cfe8cd;
+  /* 页面底纹：奶油纸纹噪点 */
+  --c-bg-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  /* 深色星空：深空蓝底 + 泛紫调的柔和粉彩 */
+  --c-cream: #0b1020;
+  --c-paper: #171e36;
+  --c-ink: #ece7db;
+  --c-ink-soft: #98a1c7;
+  --c-tape: #39405f;
+  --c-pblue: #46607d;
+  --c-ppink: #7a4a5a;
+  --c-pyellow: #8a7a3f;
+  --c-ppurple: #5d5485;
+  --c-pgreen: #4f7357;
+  /* 页面底纹：星点 + 星云微光 */
+  --c-bg-texture:
+    radial-gradient(1.5px 1.5px at 12% 18%, rgba(255, 255, 255, 0.85), transparent 100%),
+    radial-gradient(1px 1px at 25% 64%, rgba(255, 255, 255, 0.55), transparent 100%),
+    radial-gradient(1.5px 1.5px at 38% 34%, rgba(255, 255, 255, 0.75), transparent 100%),
+    radial-gradient(1px 1px at 52% 12%, rgba(255, 255, 255, 0.5), transparent 100%),
+    radial-gradient(1.5px 1.5px at 61% 47%, rgba(255, 255, 255, 0.65), transparent 100%),
+    radial-gradient(1px 1px at 74% 23%, rgba(255, 255, 255, 0.5), transparent 100%),
+    radial-gradient(1.5px 1.5px at 86% 57%, rgba(255, 255, 255, 0.7), transparent 100%),
+    radial-gradient(1px 1px at 15% 83%, rgba(255, 255, 255, 0.45), transparent 100%),
+    radial-gradient(1.5px 1.5px at 68% 86%, rgba(255, 255, 255, 0.6), transparent 100%),
+    radial-gradient(1px 1px at 92% 86%, rgba(255, 255, 255, 0.45), transparent 100%),
+    radial-gradient(1px 1px at 47% 68%, rgba(255, 255, 255, 0.35), transparent 100%),
+    radial-gradient(1.5px 1.5px at 33% 92%, rgba(255, 255, 255, 0.5), transparent 100%),
+    radial-gradient(ellipse 55% 40% at 78% 26%, rgba(123, 97, 179, 0.14), transparent 70%),
+    radial-gradient(ellipse 50% 45% at 16% 72%, rgba(72, 110, 180, 0.12), transparent 70%),
+    radial-gradient(ellipse 65% 50% at 46% 100%, rgba(97, 76, 173, 0.1), transparent 75%);
 }
 
 html {
   scroll-behavior: smooth;
 }
 
+/* 页面主画布：背景色 + 底纹随主题切换（body 底纹仅滚动回弹时可见） */
+.app-shell {
+  background-color: var(--color-cream);
+  background-image: var(--c-bg-texture);
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
 body {
   font-family: var(--font-sans);
   background-color: var(--color-cream);
-  /* 纸张噪点纹理 */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
   color: var(--color-ink);
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 /* ---------- 手写体工具类 ---------- */
@@ -46,12 +105,12 @@ body {
 /* ---------- 不规则手绘圆圈（标签用） ---------- */
 .hand-badge {
   border-radius: 58% 42% 55% 45% / 46% 55% 45% 54%;
-  border: 2px dashed rgba(91, 74, 63, 0.3);
+  border: 2px dashed color-mix(in srgb, var(--c-ink) 30%, transparent);
   transition: transform 0.3s ease, border-color 0.3s ease;
 }
 .hand-badge:hover {
   transform: rotate(0deg) scale(1.06) !important;
-  border-color: rgba(91, 74, 63, 0.55);
+  border-color: color-mix(in srgb, var(--c-ink) 55%, transparent);
 }
 
 /* ---------- 胶带（拍立得/便签固定用） ---------- */
@@ -93,5 +152,5 @@ body {
 
 /* ---------- 粉彩渐变进度条 ---------- */
 .pastel-bar {
-  background-image: linear-gradient(90deg, #f6cfd8, #f8e3b0 55%, #c9e4f0);
+  background-image: linear-gradient(90deg, var(--color-ppink), var(--color-pyellow) 55%, var(--color-pblue));
 }

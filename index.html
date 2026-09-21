@@ -3,6 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    // 主题预加载：尽早恢复上次选择，避免刷新时浅色/深色闪烁（与 src/hooks/useTheme.js 同一 key）
+    try {
+      if (localStorage.getItem("profile-theme") === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    } catch (e) {}
+  </script>
   <title>王宇恒 · 欢迎</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

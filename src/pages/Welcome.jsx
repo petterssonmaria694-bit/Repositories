@@ -25,8 +25,8 @@ const item = {
   },
 };
 
-/* ---------- 手绘涂鸦元素 ---------- */
-const ink = "#5b4a3f";
+/* ---------- 手绘涂鸦元素（描边颜色跟随当前主题） ---------- */
+const ink = "var(--c-ink)";
 
 function Doodle({ children, className }) {
   return (
